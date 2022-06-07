@@ -1,24 +1,38 @@
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class PlayerTest {
     @Nested
     inner class ScoringTest {
-        private val player: Player = Player()
+        private lateinit var player: Player
+        private lateinit var player2: Player
+
+        @BeforeEach
+        fun setUp() {
+            player = Player("Tom")
+            player2 = Player("Chicken Georges")
+        }
 
         @Test
         fun `Player must start a match without point`() {
             val expectedValue = "love"
-            assertEquals(expectedValue, player.score)
+            assertEquals(expectedValue, player.point)
+        }
+
+        @Test
+        fun `A player start a game with 0 game`() {
+            val expectedValue = 0
+            assertEquals(expectedValue, player.game)
         }
 
         @Test
         fun `When a player score a first point (from love) he should return 15`() {
             val expectedValue = "15"
             player.score()
-            assertEquals(expectedValue, player.score)
+            assertEquals(expectedValue, player.point)
         }
 
         @Test
@@ -26,7 +40,7 @@ internal class PlayerTest {
             val expectedValue = "30"
             player.score()
             player.score()
-            assertEquals(expectedValue, player.score)
+            assertEquals(expectedValue, player.point)
         }
 
         @Test
@@ -35,7 +49,7 @@ internal class PlayerTest {
             player.score()
             player.score()
             player.score()
-            assertEquals(expectedValue, player.score)
+            assertEquals(expectedValue, player.point)
         }
 
         @Test
@@ -45,9 +59,18 @@ internal class PlayerTest {
             player.score()
             player.score()
             player.score()
-            assertEquals(expectedValue, player.score)
+            assertEquals(expectedValue, player.point)
         }
 
+        @Test
+        fun `When a player has scored 40, then score again he wins the game`() {
+            val expectedValue = 1
+            player.score()
+            player.score()
+            player.score()
+            player.score()
+            assertEquals(expectedValue, player.game)
+        }
     }
 
 }

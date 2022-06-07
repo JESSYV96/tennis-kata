@@ -31,44 +31,44 @@ internal class PlayerTest {
         @Test
         fun `When a player score a first point (from love) he should return 15`() {
             val expectedValue = "15"
-            player.score()
+            player.score(0)
             assertEquals(expectedValue, player.point)
         }
 
         @Test
         fun `When a player score a second point (from 15) he should return 30`() {
             val expectedValue = "30"
-            player.score()
-            player.score()
+            player.score(0)
+            player.score(0)
             assertEquals(expectedValue, player.point)
         }
 
         @Test
         fun `When a player score a third point (from 30) he should return 40`() {
             val expectedValue = "40"
-            player.score()
-            player.score()
-            player.score()
+            player.score(0)
+            player.score(0)
+            player.score(0)
             assertEquals(expectedValue, player.point)
         }
 
         @Test
         fun `When a player score a fourth point (from 40) he should return love`() {
             val expectedValue = "love"
-            player.score()
-            player.score()
-            player.score()
-            player.score()
+            player.score(0)
+            player.score(0)
+            player.score(0)
+            player.score(0)
             assertEquals(expectedValue, player.point)
         }
 
         @Test
-        fun `When a player has scored 40, then score again he wins the game`() {
+        fun `When a player has scored 40, then score again he win the game`() {
             val expectedValue = 1
-            player.score()
-            player.score()
-            player.score()
-            player.score()
+            player.score(0)
+            player.score(0)
+            player.score(0)
+            player.score(0)
             assertEquals(expectedValue, player.game)
         }
     }

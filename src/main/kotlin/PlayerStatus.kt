@@ -1,3 +1,3 @@
 enum class PlayerStatus {
-    Game, BeforeDeuce, Deuce, Advantage, WinGame
+    Game, Deuce, Advantage, WinGame
 }

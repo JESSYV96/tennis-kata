@@ -3,17 +3,19 @@ class TennisMatch(player1name: String, player2name: String) {
         1 to Player(player1name),
         2 to Player(player2name)
     )
-    private var matchStatus: MatchStatus = MatchStatus.Game
+    private var matchStatus: MatchStatus = MatchStatus.GameTime
     get() {
         val player1 = getPlayer(1)
         val player2 = getPlayer(2)
         matchStatus =
-            if (player1.point == 3 && player2.point == 3)
-                MatchStatus.Deuce
+            if (player1.status == PlayerStatus.Advantage || player2.status == PlayerStatus.Advantage)
+                MatchStatus.AdvantageTime
+            else if (player1.point == 3 && player2.point == 3)
+                MatchStatus.DeuceTime
             else if (player1.status == PlayerStatus.WinGame || player2.status == PlayerStatus.WinGame)
                 MatchStatus.GameWinning
             else
-                MatchStatus.Game
+                MatchStatus.GameTime
             return field
     }
 
@@ -23,7 +25,8 @@ class TennisMatch(player1name: String, player2name: String) {
 
     fun printCurrentScore(player1: Player, player2: Player): String {
         return when (matchStatus) {
-            MatchStatus.Deuce -> "Deuce ! ${formatScore(player1.point)} - ${formatScore(player2.point)}."
+            MatchStatus.DeuceTime -> "Deuce ! ${formatScore(player1.point)} - ${formatScore(player2.point)}."
+            MatchStatus.AdvantageTime -> "Advantage for Roger"
             MatchStatus.GameWinning -> {
                 resetGame()
                 "Score: ${player1.name}(${player1.game}) ${formatScore(player1.point)} " +
